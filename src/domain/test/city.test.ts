@@ -1,5 +1,6 @@
 import { describe, beforeEach, test, expect } from "vitest";
 import City, { calculateDurationDays } from "../city.ts";
+import Accommodation from "../accommodation.ts";
 
 function createCity(): City {
   return new City(
@@ -8,6 +9,7 @@ function createCity(): City {
     new Date("2023-05-01"),
     new Date("2023-05-04"),
     "Notas",
+    new Accommodation("casa", 25),
   );
 }
 
@@ -22,7 +24,7 @@ describe("City name", () => {
   });
 
   test("should throw error if city name is empty", () => {
-    // TODO: Implementar validación de nombre vacío en la clase City
+    expect(() => city.setName("")).toThrow("El nombre de la ciudad debe ser una cadena no vacía");
   });
 });
 
@@ -33,7 +35,8 @@ describe("City country", () => {
   });
 
   test("should set country correctly", () => {
-    // TODO: Implementar test para validar país
+    city.setCountry("new country");
+    expect(city.getCountry()).toBe("new country");
   });
 
   test("should throw error if country is not a string", () => {
@@ -160,6 +163,8 @@ describe("Duration in days", () => {
       "TestCountry",
       new Date("2023-05-01"),
       new Date("2023-05-01"),
+      "Notas",
+      new Accommodation("casa", 25),
     );
     expect(singleDayCity.getDurationDays()).toBe(1);
   });
